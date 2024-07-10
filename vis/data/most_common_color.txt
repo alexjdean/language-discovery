@@ -1,0 +1,32 @@
+black 253
+white 301
+blue 844
+green 892
+
+white 247
+black 314
+green 872
+blue 898
+gold 909
+
+white 438
+black 793
+
+black 794
+white 796
+
+white 78
+
+gold 78
+white 633
+
+gold 311
+
+white 716
+green 898
+
+black 517
+white 551
+red 789
+gray 801 
+white 964

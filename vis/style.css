@@ -1,0 +1,166 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    font-family: Georgia;
+    margin-bottom: 6em;
+    background-color: #FFFFFF;
+}
+
+#title {
+    /*background-color: #2a5599;*/
+    color: #2a5599;
+    /*padding: 5px;*/
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+#title, #subtitle, #credits {
+    text-align: center;
+}
+
+#instructions {
+    font-size: 12px;
+}
+
+#tooltip {
+    border: 1px solid black;
+    padding: 5px;
+    position: absolute;
+    display: none;
+}
+
+h2 {
+    font-family: Georgia;
+    font-size: 1.5rem;
+    margin: 2px;
+    color: #001f3f;
+}
+
+hr {
+    border-style: dotted none none;
+    height: 0;
+    border-color: gray;
+    border-width: 5px;
+    width: 5%;
+}
+
+svg {
+    /*border: 1px solid black;*/
+}
+
+.mainView {
+    display: flex;
+}
+
+.line{
+    stroke-width: 2px;
+    fill: none;
+}
+
+#detailed {
+    /*visibility: hidden;*/
+    /*display: none;*/
+}
+
+#svg-container {
+    height: 900px;
+    width: 700px;
+    font-family: 'Helvetica Neue', sans-serif;
+}
+
+.slopegraph-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.slope-line {
+    stroke: #13294b;
+    stroke-width: 2px;
+    stroke-linecap: round;
+}
+
+.slope-label-left, .slope-label-right {
+    font-size: 11px;
+    cursor: default;
+    font-weight: 500;
+}
+
+.label-figure {
+    font-weight: 800;
+}
+
+.border-lines {
+    stroke: #7FDBFF;
+    stroke-width: 1px;
+}
+
+.voronoi path {
+    fill: none;
+    pointer-events: all;
+}
+
+circle {
+    fill: #e8e9ea;
+    stroke: #e84a27;
+    stroke-width: 3px;
+}
+
+.y-label {
+    transform: rotate(-90deg);
+    display: flex;
+}
+
+@import url(https://fonts.googleapis.com/css?family=Merriweather+Sans);
+
+ol {
+    counter-reset: li;
+    list-style: none;
+    *list-style: decimal; /* Keep using default numbering for IE6/7 */
+    font: 15px 'Merriweather Sans', 'lucida sans', sans-serif;
+    padding: 0;
+    text-shadow: 0 1px 0 rgba(255,255,255,.5);
+    width: 300px;
+    margin: 0 auto;
+}
+ol ol {
+    margin-left: 2em;
+}
+.rounded-list a {
+    position: relative;
+    display: block;
+    padding: .4em .4em .4em 2em;
+    *padding: .4em;
+    margin: .5em 0;
+    background: #ddd;
+    color: #444;
+    text-decoration: none;
+    border-radius: .3em;
+    transition: all .5s ease-out;
+}
+.rounded-list a:hover{
+    background: #eee;
+}
+.rounded-list a:before{
+    content: counter(li);
+    counter-increment: li;
+    position: absolute;
+    left: -1.3em;
+    top: 50%;
+    margin-top: -1.3em;
+    background: #87ceeb;
+    height: 2em;
+    width: 2em;
+    line-height: 2em;
+    border: .3em solid #fff;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 2em;
+    transition: all .3s ease-out;
+}
+
+.bottom-three {
+    margin-bottom: 1cm;
+}

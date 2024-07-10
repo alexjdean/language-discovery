@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+</head>
+<body>
+<h1 id="title">Language Discovery</h1>
+<h2 id="subtitle">Visualizing hidden features of languages and their connections to each other</h2>
+
+<hr>
+
+<p>The goal of this project is to uncover new and interesting facts about the languages we know and use
+    every day. I am particularly interested in what connection a given language has with another, and if
+    there is a way to quantify how similar a set of languages are. </p>
+
+<p>The data sets were mostly collected from frequency dictionaries that catalog the most commonly used words
+    in a particular language. Drawing from those sources, the first 900 words were used and organized into
+    a "language matrix," as well as a hash table was used to find connections between the various languages
+    using an algorithm I wrote. More details on that below.</p>
+
+<p>I tried to be diverse in picking languages, yet I was constrained by the fact that the languages must
+    use the latin alphabet for my analysis to work. The languages included are: </p>
+
+<br/>
+<ol class="rounded-list">
+    <li><a href="">English</a>
+        <img src="english.png" alt="My Image" width = "50" height="25"></li>
+    <li><a href="">Spanish</a>
+        <img src="spanish.png" alt="My Image" width = "50" height="25"></li>
+    <li><a href="">French</a>
+        <img src="french.png" alt="My Image" width = "50" height="25"></li>
+    <li><a href="">Dutch</a>
+        <img src="dutch.png" alt="My Image" width = "50" height="25"></li>
+    <li><a href="">German</a>
+        <img src="german.png" alt="My Image" width = "50" height="25"></li>
+    <li><a href="">Catalan</a>
+        <img src="catalan.png" alt="My Image" width = "50" height="25"></li>
+    <li><a href="">Italian</a>
+        <img src="italian.png" alt="My Image" width = "50" height="25"></li>
+    <li><a href="">Turkish</a>
+        <img src="turkish.png" alt="My Image" width = "50" height="30"></li>
+    <li><a href="">Esperanto</a>
+        <img src="esperanto.png" alt="My Image" width = "50" height="30"></li>
+</ol>
+<br />
+
+<hr class = bottom-three>
+
+<h2>How long are the most common words?</h2>
+
+<p>We analyze this in two ways: we look at the average word length among the top 10% (or first 90 words of 900) for
+    the average length, and then we do the same for the entire collection. What follows are visualizations describing
+    both.</p>
+
+<script>
+    window.onload = function () {
+
+        var chart1 = new CanvasJS.Chart("chartContainer1", {
+            animationEnabled: true,
+            theme: "light2", // "light1", "light2", "dark1", "dark2"
+            title:{
+                text: "The Average Length of the Top 10%"
+            },
+            axisY: {
+                title: "Number of Characters"
+            },
+            data: [{
+                type: "column",
+                showInLegend: true,
+                legendMarkerColor: "grey",
+                legendText: "Languages",
+                dataPoints: [
+                    { y: 3.33333, label: "English" },
+                    { y: 3.93333,  label: "Spanish" },
+                    { y: 3.35556,  label: "French" },
+                    { y: 3.33333,  label: "Dutch" },
+                    { y: 3.32222,  label: "German" },
+                    { y: 3.64444, label: "Catalan" },
+                    { y: 3.32222,  label: "Italian" },
+                    { y: 4.81111,  label: "Turkish" },
+                    { y: 4.23333,  label: "Esperanto" }
+                ]
+            }]
+        });
+
+        var chart2 = new CanvasJS.Chart("chartContainer2", {
+            animationEnabled: true,
+            theme: "light2", // "light1", "light2", "dark1", "dark2"
+            title:{
+                text: "The Average Length of the Most Frequent Words"
+            },
+            axisY: {
+                title: "Number of Characters"
+            },
+            data: [{
+                type: "column",
+                showInLegend: true,
+                legendMarkerColor: "grey",
+                legendText: "Languages",
+                dataPoints: [
+                    { y: 5.24, label: "English" },
+                    { y: 6.27556,  label: "Spanish" },
+                    { y: 6.09,  label: "French" },
+                    { y: 5.33556,  label: "Dutch" },
+                    { y: 5.10667,  label: "German" },
+                    { y: 6.01333, label: "Catalan" },
+                    { y: 5.36778,  label: "Italian" },
+                    { y: 6.18889,  label: "Turkish" },
+                    { y: 5.92556,  label: "Esperanto" }
+                ]
+            }]
+        });
+
+        var chart3 = new CanvasJS.Chart("chartContainer3", {
+            theme: "light2", // "light1", "light2", "dark1", "dark2"
+            animationEnabled: true,
+            title: {
+                text: "Increase in Word Length"
+            },
+            axisY: {
+                title: "Number of Characters",
+                includeZero: false
+            },
+            data: [{
+                type: "rangeColumn",
+                yValueFormatString: "#,##0.00",
+                dataPoints: [
+                    { y: [3.33333, 5.24], label: "English" },
+                    { y: [3.93333, 6.27556],  label: "Spanish" },
+                    { y: [3.35556, 6.09],  label: "French" },
+                    { y: [3.33333, 5.33556],  label: "Dutch" },
+                    { y: [3.32222, 5.10667],  label: "German" },
+                    { y: [3.64444, 6.01333], label: "Catalan" },
+                    { y: [3.32222, 5.36778],  label: "Italian" },
+                    { y: [4.81111, 6.18889],  label: "Turkish" },
+                    { y: [4.23333, 5.92556],  label: "Esperanto" }
+                ]
+            }]
+        });
+
+        var chart4 = new CanvasJS.Chart("chartContainer4", {
+            animationEnabled: true,
+            title:{
+                text: "The Most Common Colors"
+            },
+            axisX: {
+                title:"Languages"
+            },
+            axisY:{
+                title: "Frequency"
+            },
+            data: [{
+                type: "scatter",
+                toolTipContent: "<span style='color:#C0504E '><b>{name}</b></span><br/><b> Load:</b> {x} TPS<br/><b> Response Time:</b></span> {y} ms",
+                name: "Blue",
+                showInLegend: true,
+                dataPoints: [
+                    { y: 5.24, label: "English" },
+                    { y: 6.27556,  label: "Spanish" },
+                    { y: 6.09,  label: "French" },
+                    { y: 5.33556,  label: "Dutch" },
+                    { y: 5.10667,  label: "German" },
+                    { y: 6.01333, label: "Catalan" },
+                    { y: 5.36778,  label: "Italian" },
+                    { y: 6.18889,  label: "Turkish" },
+                    { y: 5.92556,  label: "Esperanto" }
+                ]
+            },
+                {
+                    type: "scatter",
+                    name: "Red",
+                    showInLegend: true,
+                    toolTipContent: "<span style='color:#C0504E '><b>{name}</b></span><br/><b> Load:</b> {x} TPS<br/><b> Response Time:</b></span> {y} ms",
+                    dataPoints: [
+                        { y: 5.24, label: "English" },
+                        { y: 6.27556,  label: "Spanish" },
+                        { y: 6.09,  label: "French" },
+                        { y: 5.33556,  label: "Dutch" },
+                        { y: 5.10667,  label: "German" },
+                        { y: 6.01333, label: "Catalan" },
+                        { y: 5.36778,  label: "Italian" },
+                        { y: 6.18889,  label: "Turkish" },
+                        { y: 5.92556,  label: "Esperanto" }
+                    ]
+                },
+                {
+                    type: "scatter",
+                    name: "Green",
+                    showInLegend: true,
+                    toolTipContent: "<span style='color:green '><b>{name}</b></span><br/><b> Load:</b> {x} TPS<br/><b> Response Time:</b></span> {y} ms",
+                    dataPoints: [
+                        { y: 5.24, label: "English" },
+                        { y: 6.27556,  label: "Spanish" },
+                        { y: 6.09,  label: "French" },
+                        { y: 5.33556,  label: "Dutch" },
+                        { y: 5.10667,  label: "German" },
+                        { y: 6.01333, label: "Catalan" },
+                        { y: 5.36778,  label: "Italian" },
+                        { y: 6.18889,  label: "Turkish" },
+                        { y: 5.92556,  label: "Esperanto" }
+                    ]
+                },
+                {
+                    type: "scatter",
+                    name: "Black",
+                    showInLegend: true,
+                    toolTipContent: "<span style='color:black '><b>{name}</b></span><br/><b> Load:</b> {x} TPS<br/><b> Response Time:</b></span> {y} ms",
+                    dataPoints: [
+                        { y: 253, label: "English" },
+                        { y: 6.27556,  label: "Spanish" },
+                        { y: 6.09,  label: "French" },
+                        { y: 5.33556,  label: "Dutch" },
+                        { y: 5.10667,  label: "German" },
+                        { y: 6.01333, label: "Catalan" },
+                        { y: 5.36778,  label: "Italian" },
+                        { y: 6.18889,  label: "Turkish" },
+                        { y: 5.92556,  label: "Esperanto" }
+                    ]
+                },
+                {
+                    type: "scatter",
+                    name: "White",
+                    showInLegend: true,
+                    toolTipContent: "<span style='color:#C0504E '><b>{name}</b></span><br/><b> Load:</b> {x} TPS<br/><b> Response Time:</b></span> {y} ms",
+                    dataPoints: [
+                        { y: 301, label: "English" },
+                        { y: 6.27556,  label: "Spanish" },
+                        { y: 6.09,  label: "French" },
+                        { y: 5.33556,  label: "Dutch" },
+                        { y: 5.10667,  label: "German" },
+                        { y: 6.01333, label: "Catalan" },
+                        { y: 5.36778,  label: "Italian" },
+                        { y: 6.18889,  label: "Turkish" },
+                        { y: 5.92556,  label: "Esperanto" }
+                    ]
+                },
+                {
+                    type: "scatter",
+                    name: "Gold",
+                    showInLegend: true,
+                    toolTipContent: "<span style='color:yellow '><b>{name}</b></span><br/><b> Load:</b> {x} TPS<br/><b> Response Time:</b></span> {y} ms",
+                    dataPoints: [
+                        { y: 5.24, label: "English" },
+                        { y: 6.27556,  label: "Spanish" },
+                        { y: 6.09,  label: "French" },
+                        { y: 5.33556,  label: "Dutch" },
+                        { y: 5.10667,  label: "German" },
+                        { y: 6.01333, label: "Catalan" },
+                        { y: 5.36778,  label: "Italian" },
+                        { y: 6.18889,  label: "Turkish" },
+                        { y: 5.92556,  label: "Esperanto" }
+                    ]
+                }]
+        });
+
+        chart1.render();
+        chart2.render();
+        chart3.render();
+        chart4.render();
+    }
+</script>
+
+<div id="chartContainer1" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+
+<p class = bottom-three>Interestingly enough, among the top 10% (or 90 most commonly used words), Turkish appears to have the longest
+    words, followed by Esperanto, a language invented by linguist in the 19th century. Every other language seems to average
+    around 3.3 characters however, except Spanish and Catalan.</p>
+
+<div id="chartContainer2" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+
+<p class = bottom-three>As more words are included, Spanish has the longest words out of the langauge group, followed
+    closely behind by Turkish and Catalan. The difference between the average lengths of the languages has gotten smaller. Another
+    obvious trend is that every language had its average length increase. This means that <strong>the most common words tend to
+        also be the shortest words.</strong> </p>
+
+<div id="chartContainer3" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+
+<p class = bottom-three>French changes the most the more words are added, and every language increases, proving
+    the previous claim.</p>
+
+<h2 class="bottom-three">The most common colors in every language</h2>
+
+<p>We model this problem as a graph, where every edge between two languages represents that they have a color in common
+and the color of the edge is their commonality. </p>
+
+The graph can be found <a href="index2.html">here.</a>
+
+</body>
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<script src="canvasjs.min.js"></script>
+<link rel="stylesheet" href="style.css">
+<script src="visual.js"></script>
+<script src="//unpkg.com/3d-force-graph"></script>
+</html>
+
